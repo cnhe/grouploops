@@ -1,5 +1,5 @@
 {
-  "name": "mywebapp",
+  "name": "grouploops",
   "version": "0.0.1",
   "author": "Christine He",
   "scripts": {
@@ -11,10 +11,7 @@
     "mongodb": "*",
     "mongoose": "*",
     "passport": "*",
-    "passport-facebook": "*",
-    "passport-twitter": "*",
-    "dotenv": "*",
-    "instagram-node-lib": "*"
+    "dotenv": "*"
   },
   "engines": {
     "node": "0.10.x"
