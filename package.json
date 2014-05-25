@@ -1,7 +1,7 @@
 {
-  "name": "mywebapp",
+  "name": "grouploops",
   "version": "0.0.1",
-  "author": "Christine He",
+  "author": "Christine He, Daniel Xu, Melissa Wong, Tigran Tigranian",
   "scripts": {
     "start": "node app.js"
   },
@@ -10,11 +10,8 @@
     "express3-handlebars": "*",
     "mongodb": "*",
     "mongoose": "*",
-    "passport": "*",
-    "passport-facebook": "*",
-    "passport-twitter": "*",
-    "dotenv": "*",
-    "instagram-node-lib": "*"
+    "googleapis": "*",
+    "dotenv": "*"
   },
   "engines": {
     "node": "0.10.x"
