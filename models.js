@@ -26,6 +26,3 @@ var UserGroupsSchema = new Mongoose.Schema({
   "group_id": String
 });
 
-exports.User = Mongoose.model('User', UserSchema);
-exports.Group = Mongoose.model('Group', GroupSchema);
-exports.UserGroups = Mongoose.model('UserGroups', UserGroupsSchema);
