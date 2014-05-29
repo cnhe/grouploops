@@ -1,0 +1,188 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>GroupLoops</title>	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->        
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+      <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="jumbotron" style="background-image: url('img/sky.png')">
+      <center>
+      <h1>GroupLoops</h1>
+      <p>A simple utility to form optimized groups for projects or studying.</p>
+      </center>
+    </div>
+
+    {{#if professor}}
+    <div id="formDiv">
+      <form role="form">
+        <div class="form-group">
+          <label for="name">Class Name</label>
+          <input type="text" class="form-control" id="name" placeholder="Example: COGS 121">
+        </div>
+        <div class="form-group">
+          <label for="numStudents">Number of Students</label>
+          <input type="number" class="form-control" id="numStudents" placeholder="Example: 42">
+        </div>
+        <div class="form-group">
+          <label for="groupSize">Desired Group Size</label>
+          <input type="number" class="form-control" id="groupSize" placeholder="Example: 4">
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox"> Extra questions?
+          </label>
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+    {{/if}}
+
+    {{#if student}}
+    <div id="formDiv">
+      <form role="form" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" class="form-control" name="name" placeholder="Example: Jon Student">
+        </div>
+        <div class="form-group">
+          <label for="id">Student Id</label>
+          <input type="text" class="form-control" name="studentId" placeholder="Example: A09876543">
+        </div>
+        <div class="form-group">
+          <label for="emailAddr">Email Address</label>
+          <input type="email" class="form-control" name="emailAddr" placeholder="Example: jstu@ucsd.edu">
+        </div>
+        <div class="form-group">
+          <label for="phone">Mobile Number</label>
+          <input type="tel" class="form-control" name="phone" placeholder="Example: (123) 456-7890">
+        </div>
+        <div class="form-group">
+          <label for="avatar">Picture</label>
+          <input type="file" class="form-control" name="avatar">
+        </div>
+        <table class="table table-condensed" onmouseup="down=false;deselect=false;" onselectstart="return false">
+          <thead>
+            <tr>
+              <th></th>
+              <th class="weekday">Sun</th>
+              <th class="weekday">Mon</th>
+              <th class="weekday">Tue</th>
+              <th class="weekday">Wed</th>
+              <th class="weekday">Thur</th>
+              <th class="weekday">Fri</th>
+              <th class="weekday">Sat</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="daytime">Morning</th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+            </tr>
+            <tr>
+              <th class="daytime">Afternoon</th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+            </tr>
+            <tr>
+              <th class="daytime">Evening</th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+              <th class="slot"></th>
+            </tr>
+          </tbody>
+        </table>
+        <div class="form-group">
+          <label>I am a leader.</label>
+          <table>
+            <thead>
+              <th></th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+              <th>5</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <th>Strongly Disagree</th>
+              <th> <input type="radio" name="leaderRadios" value="1"> </th>
+              <th> <input type="radio" name="leaderRadios" value="2"> </th>
+              <th> <input type="radio" name="leaderRadios" value="3"> </th>
+              <th> <input type="radio" name="leaderRadios" value="4"> </th>
+              <th> <input type="radio" name="leaderRadios" value="5"> </th>
+              <th>Strongly Agree</th>
+            </tbody>
+          </table>
+        </div>
+        <div class="form-group">
+          <label>I prefer to work </label>
+            <label class="checkbox-inline"> <input type="checkbox" name="workPrefRadios" value="on" checked> on campus</label>
+            <label class="checkbox-inline"> <input type="checkbox" name="workPrefRadios" value="off"> off campus</label>
+        </div>
+        <div class="form-group">
+          <label>Rate your skill in JavaScript</label>
+          <table>
+            <thead>
+              <th></th>
+              <th>1</th>
+              <th>2</th>
+              <th>3</th>
+              <th>4</th>
+              <th>5</th>
+              <th></th>
+            </thead>
+            <tbody>
+              <th>Whats that?</th>
+              <th> <input type="radio" name="jsSkillRadios" value="1"> </th>
+              <th> <input type="radio" name="jsSkillRadios" value="2"> </th>
+              <th> <input type="radio" name="jsSkillRadios" value="3"> </th>
+              <th> <input type="radio" name="jsSkillRadios" value="4"> </th>
+              <th> <input type="radio" name="jsSkillRadios" value="5"> </th>
+              <th>Advanced</th>
+            </tbody>
+          </table>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form>
+    </div>
+    {{/if}}
+  </div>
+
+  <div class="container">
+    
+  </div>
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>
