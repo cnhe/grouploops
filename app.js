@@ -5,6 +5,7 @@ var path = require('path');
 var handlebars = require('express3-handlebars');
 var app = express();
 var index = require('./routes/index');
+var group = require('./routes/group');
 //database setup
 var mongoose = require('mongoose');
 //mongoose.connect(process.env.MONGOHQ_URL);
@@ -18,6 +19,7 @@ app.use(express.bodyParser());
 
 //routes
 app.get('/', index.view);
+app.get('/groupview', group.view);
 
 //set environment ports and start application
 app.set('port', process.env.PORT || 3000);
