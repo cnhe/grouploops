@@ -1,5 +1,5 @@
 var models = require('../models');
 
 exports.view = function(req, res) {
-	res.render('../views/groupview');
+	res.render('groupview');
 };

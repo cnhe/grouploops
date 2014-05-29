@@ -1,0 +1,42 @@
+.welcome { 
+	background: url("../img/sky.png") ;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+} 
+
+.welcomeLogo {
+  margin: auto;
+  margin-top: 5%;
+  text-align: center;
+}
+
+.welcomeLogo h1 {
+  font-size: 48px;
+}
+
+.welcomeLogo p {
+  font-size: 20px;
+}
+
+.loginLinks {
+  margin-top: 3%;
+}
+
+.loginLinks a {
+  color: black;
+  padding: 2px;
+  margin: 3px;
+  border: 2px solid black;
+}
+
+th {
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+
+  /* Rules below not implemented in browsers yet */
+  -o-user-select: none;
+  user-select: none;
+}

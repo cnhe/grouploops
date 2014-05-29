@@ -4,11 +4,13 @@ var http = require('http');
 var path = require('path');
 var handlebars = require('express3-handlebars');
 var app = express();
-var index = require('./routes/index');
+
+var survey = require('./routes/survey');
 var group = require('./routes/group');
+
 //database setup
 var mongoose = require('mongoose');
-//mongoose.connect(process.env.MONGOHQ_URL);
+mongoose.connect(process.env.MONGOLAB_URL || 'mongodb://localhost/grouploops');
 
 //Configures the Template engine
 app.engine('handlebars', handlebars());
@@ -18,7 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.bodyParser());
 
 //routes
-app.get('/', index.view);
+app.get('/', survey.welcome);
+app.get('/professor', survey.professorView);
+app.get('/student', survey.studentView);
 app.get('/groupview', group.view);
 
 //set environment ports and start application
