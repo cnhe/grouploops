@@ -5,7 +5,7 @@ var path = require('path');
 var handlebars = require('express3-handlebars');
 var app = express();
 
-var survey = require('./routes/survey');
+var index = require('./routes/index');
 var group = require('./routes/group');
 
 //database setup
@@ -20,9 +20,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.bodyParser());
 
 //routes
-app.get('/', survey.welcome);
-app.get('/professor', survey.professorView);
-app.get('/student', survey.studentView);
+app.get('/', index.welcome);
+app.get('/professor', index.professorView);
+app.get('/student', index.studentView);
 app.get('/groupview', group.view);
 
 //set environment ports and start application
