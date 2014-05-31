@@ -25,6 +25,8 @@ app.get('/professor', index.professorView);
 app.get('/student', index.studentView);
 app.get('/groupview', group.view);
 
+app.post('/createCourse', index.createCourse);
+
 //set environment ports and start application
 app.set('port', process.env.PORT || 3000);
 http.createServer(app).listen(app.get('port'), function(){

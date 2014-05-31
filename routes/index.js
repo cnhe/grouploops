@@ -11,3 +11,22 @@ exports.studentView = function(req, res) {
 exports.welcome = function(req, res) {
   res.render('welcome');
 };
+
+exports.createCourse = function(req, res) {
+  // Do validation here
+
+  
+  var newCourse = new models.Course({
+    name: req.body.courseName,
+    professor: req.body.profName,
+    num_students: req.body.numStudents,
+    group_size: req.body.groupSize
+  });
+
+  newCourse.save(function(err, savedCourse) {
+    if(err) console.log(err);
+    else {
+      res.json({courseId: savedCourse._id});
+    }
+  });
+};

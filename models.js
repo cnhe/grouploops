@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 var CourseSchema = new mongoose.Schema({
   "name": String, 
   "professor": String,
-  "num_students": Number
+  "num_students": Number,
+  "group_size": Number
 });
 
 var CustomQuestionSchema = new mongoose.Schema({
@@ -38,7 +39,7 @@ var StudentGroupsSchema = new mongoose.Schema({
   "group_id": mongoose.Schema.Types.ObjectId 
 });
 
-var Course = mongoose.model('Course', CourseSchema);
+exports.Course = mongoose.model('Course', CourseSchema);
 var Student = mongoose.model('Student', StudentSchema);
 var Group = mongoose.model('Group', GroupSchema);
 var StudentCourse = mongoose.model('StudentCourse', StudentCourseSchema);

@@ -53,5 +53,6 @@ function checkProfSurvey(formData, jqForm, options) {
 }
 
 function showCourseUrl(rspTxt) {
-
+  $("#profFormSubmit").remove();
+  $("#professorForm").append("<a href='/student/"+rspTxt.courseId+"'>"+document.location.origin+"/student/"+rspTxt.courseId+"</a>");
 }
