@@ -1,10 +1,15 @@
+.hidden {
+  display: none;
+}
+
 .welcome { 
-	background: url("../img/sky.png") ;
+	background: url("../img/sky.png") no-repeat center center fixed;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 } 
+
 
 .welcomeLogo {
   margin: auto;

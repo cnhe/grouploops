@@ -12,6 +12,8 @@ var group = require('./routes/group');
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MONGOLAB_URL || 'mongodb://localhost/grouploops');
 
+app.locals.mongoose = mongoose;
+
 //Configures the Template engine
 app.engine('handlebars', handlebars());
 app.set('view engine', 'handlebars');
@@ -24,6 +26,7 @@ app.get('/', index.welcome);
 app.get('/professor', index.professorView);
 app.get('/student', index.studentView);
 app.get('/groupview', group.view);
+app.get('/checkCourseId', index.checkCourseId);
 
 app.post('/createCourse', index.createCourse);
 

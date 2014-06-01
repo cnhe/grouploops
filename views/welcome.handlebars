@@ -26,12 +26,48 @@
       <p class="loginLinks">
         I am a:
         <a href="professor">Professor</a>
-        <a href="student">Student</a>
+        <a id="studentLoginLink">Student</a>
       </p>
+      <div class="well-sm hidden" id="studentLoginWell">
+        <form class="form-inline" id="studentForm" action="checkCourseId">
+          <div class="form-group">
+            <label for="classId">Course Id:</label>
+            <input type="text" name="courseId" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="form-control">
+          </div>
+        </form>
+      </div>
+      <div class="alert alert-danger" style="display: none;" id="invalidCourseIdWarning">
+        <strong>Warning!</strong> Course Id does not exist. Please enter a valid course id.
+      </div>
     </div>
   </div>
 
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="js/bootstrap.js"></script>
+  <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
+  <script>
+    $("#studentLoginLink").click(function(e) {
+      e.preventDefault();
+      $("#studentLoginWell").removeClass("hidden");
+      return false;
+    });
+
+    // check class id
+    $("#studentForm").ajaxForm({
+      semantic: true,
+      success: redirect
+    });
+
+    function redirect(rspTxt) {
+      if(rspTxt.err)
+        $("#invalidCourseIdWarning").show();
+      else
+        document.location = "/student?" + $("#studentForm").formSerialize();
+    }
+  
+  </script>
 </body>
 </html>
