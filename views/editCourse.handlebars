@@ -1,0 +1,61 @@
+<!doctype html>
+
+<html>
+<head>
+	<title>GroupLoops</title>	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->        
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+      <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
+</head>
+
+<body>
+  <div class="container">
+    <div id="jumbotron" class="jumbotron" style="background-image: url('img/sky.png')">
+      <center>
+      <h1>GroupLoops</h1>
+      <p>A simple utility to form optimized groups for projects or studying.</p>
+      </center>
+    </div>
+
+    <p>Course Id: {{course._id}}</p>
+    <p>Course Name: {{course.name}}</p>
+    <p>Professor Name: {{course.professor}}</p>
+    <p>Number of Students: {{course.num_students}}</p>
+    <p>Desired Group Size: {{course.group_size}}</p>
+    <p>
+      Student group survey link: 
+      <a id="studentSurveyLink" href="/student?courseId={{course._id}}"></a>
+    </p>
+    <button id="deleteBtn" class="btn btn-danger">Delete Course</button>
+    <div class="alert alert-danger" style="display: none;" id="deleteMsg">
+      Your course has been deleted. You will be redirected in 5 seconds..
+    </div>
+ </div>
+
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="js/bootstrap.js"></script>
+  <script src="js/index.js"></script>
+  <script>
+    var link = document.location.origin + "/student?courseId={{course._id}}"
+    $("#studentSurveyLink").text(link);
+
+    $("#deleteBtn").click(function() {
+      $.post("/deleteCourse?courseId={{course._id}}", function(rspTxt) {
+        $("#deleteMsg").show();
+        setTimeout(function(){
+          document.location = "/"; 
+        }, 5000);
+      });
+    });
+  </script>
+</body>
+</html>
