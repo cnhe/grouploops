@@ -1,14 +1,15 @@
-var models = require('../models');
-var mongoose = require('mongoose');
-var Course = models.Course;
-var ObjectId = mongoose.Types.ObjectId;
+var models = require('../models'),
+    mongoose = require('mongoose'),
+    Course = models.Course,
+    Student = models.Student,
+    ObjectId = mongoose.Types.ObjectId;
 
 exports.professorView = function(req, res) {
   res.render('survey', {professor: 1});
 };
 
 exports.studentView = function(req, res) {
-  res.render('survey', {student: 1});
+  res.render('survey', {student: 1, courseId: req.query.courseId});
 };
 
 exports.welcome = function(req, res) {
@@ -28,7 +29,7 @@ exports.checkCourseId = function(req, res) {
     return;
   }
   res.json({found: 1});
-}
+};
 
 exports.createCourse = function(req, res) {
   // Do validation here
@@ -67,7 +68,7 @@ exports.editCourse = function(req, res) {
     res.send("invalid course id");
     return;
   }
-}
+};
 
 exports.deleteCourse = function(req, res) {
   var courseId = ObjectId(req.query.courseId);
@@ -77,11 +78,35 @@ exports.deleteCourse = function(req, res) {
       res.send(200);
     }
   });
-}
+};
 
 exports.printCourses = function(req, res) {
   Course.find(function(err, courses) {
     console.log(courses);
   });
   res.send(200);
-}
+};
+
+exports.waitingRoom = function(req, res) {
+  console.log(req.body);
+  // Do validation here
+  
+  var newStudent = new Student({
+    name: req.body.name,
+    student_id: req.body.studentId,
+    email: req.body.emailAddr,
+    phone: req.body.phone,
+    course_id: ObjectId(req.body.courseId),
+    leader_rating: parseInt(req.body.leaderRadios),
+    work_pref: typeof(req.body.workPref) === 'string' ? req.body.workPref === 'off' ? 0 : 1 : 2,
+    avail: !req.body.avail ? [] : req.body.avail.split(',').map(function(e) {return parseInt(e);})
+  });
+
+  newStudent.save(function(err, savedStudent) {
+    if(err) console.log(err);
+    else {
+      res.render("waitingRoom");
+    }
+  });
+
+};

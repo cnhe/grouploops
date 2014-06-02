@@ -29,6 +29,7 @@ app.get('/groupview', group.view);
 app.get('/editCourse', index.editCourse);
 app.get('/checkCourseId', index.checkCourseId);
 app.get('/printCourses', index.printCourses);
+app.post('/waitingRoom', index.waitingRoom);
 
 app.post('/createCourse', index.createCourse);
 app.post('/deleteCourse', index.deleteCourse);

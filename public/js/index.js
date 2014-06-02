@@ -39,6 +39,15 @@ function initStudentSurvey() {
     var somethingToSet = true;
   });
 
+  $("#studentForm :submit").click(function(e) {
+    var availArray = [];
+    $(".slot.success").each(function() {
+      availArray.push(this.id);
+    });
+    
+    $("#studentForm").append($("<input>").attr({type: "hidden", name: "avail", value: availArray.join(',')}));
+    $("#studentForm").submit();
+  });
 }
 
 function initProfessorSurvey() {

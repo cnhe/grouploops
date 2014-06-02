@@ -1,4 +1,6 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    ObjectId = mongoose.Schema.Types.ObjectId;
+    
 
 var CourseSchema = new mongoose.Schema({
   "name": String, 
@@ -8,7 +10,7 @@ var CourseSchema = new mongoose.Schema({
 });
 
 var CustomQuestionSchema = new mongoose.Schema({
-  "course_id": mongoose.Schema.Types.ObjectId,
+  "course_id": ObjectId,
   "label": String,
   "type": String
 });
@@ -18,8 +20,11 @@ var StudentSchema = new mongoose.Schema({
   "name": String, 
   "student_id": String,
   "email": String,
-  "phone_no": String
-//  "course_id": mongoose.Schema.Types.ObjectId   // only if non distinct students
+  "phone": String,
+  "course_id": ObjectId,   // only if non distinct students
+  "leader_rating": Number,
+  "work_pref": Number, // 0 = off campus, 1 = on, 2 = either
+  "avail": Array
 });
 
 var GroupSchema = new mongoose.Schema({
@@ -30,18 +35,18 @@ var GroupSchema = new mongoose.Schema({
 //   If we have accounts, there will be unique students and they each 
 //    have multiple courses
 var StudentCourseSchema = new mongoose.Schema({
-  "student_id": mongoose.Schema.Types.ObjectId, 
-  "course_id": mongoose.Schema.Types.ObjectId
+  "student_id": ObjectId, 
+  "course_id": ObjectId
 });
 
 var StudentGroupsSchema = new mongoose.Schema({
-  "student_id": mongoose.Schema.Types.ObjectId,
-  "group_id": mongoose.Schema.Types.ObjectId 
+  "student_id": ObjectId,
+  "group_id": ObjectId 
 });
 
 exports.Course = mongoose.model('Course', CourseSchema);
-var Student = mongoose.model('Student', StudentSchema);
-var Group = mongoose.model('Group', GroupSchema);
-var StudentCourse = mongoose.model('StudentCourse', StudentCourseSchema);
-var StudentGroups = mongoose.model('StudentGroups', StudentGroupsSchema);
-var CustomQuestion = mongoose.model('CustomQuestion', CustomQuestionSchema);
+exports.Student = mongoose.model('Student', StudentSchema);
+exports.Group = mongoose.model('Group', GroupSchema);
+exports.StudentCourse = mongoose.model('StudentCourse', StudentCourseSchema);
+exports.StudentGroups = mongoose.model('StudentGroups', StudentGroupsSchema);
+exports.CustomQuestion = mongoose.model('CustomQuestion', CustomQuestionSchema);

@@ -2,6 +2,11 @@
   display: none;
 }
 
+body {
+  padding-top: 8px;
+  padding-bottom: 15px;
+}
+
 .welcome { 
 	background: url("../img/sky.png") no-repeat center center fixed;
 	-webkit-background-size: cover;

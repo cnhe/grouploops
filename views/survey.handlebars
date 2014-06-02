@@ -58,7 +58,7 @@
 
     {{#if student}}
     <div class="formDiv">
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form id="studentForm" role="form" method="post" action="waitingRoom">
         <div class="form-group">
           <label for="name">Name</label><span class="requiredAsterisk"> *</span>
           <input type="text" class="form-control" name="name" placeholder="Example: Jon Student" required>
@@ -76,7 +76,7 @@
           <input type="tel" class="form-control" name="phone" placeholder="Example: (123) 456-7890">
         </div>
         <label>Please highlight your availability</label><span class="requiredAsterisk"> *</span>
-        <table class="table table-condensed" onmouseup="down=false;deselect=false;" onselectstart="return false">
+        <table class="table table-condensed" id="availabilityTable" onmouseup="down=false;deselect=false;" onselectstart="return false">
           <thead>
             <tr>
               <th></th>
@@ -92,33 +92,33 @@
           <tbody>
             <tr>
               <th class="daytime">Morning</th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
+              <th class="slot" id="0"></th>
+              <th class="slot" id="1"></th>
+              <th class="slot" id="2"></th>
+              <th class="slot" id="3"></th>
+              <th class="slot" id="4"></th>
+              <th class="slot" id="5"></th>
+              <th class="slot" id="6"></th>
             </tr>
             <tr>
               <th class="daytime">Afternoon</th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
+              <th class="slot" id="7"></th>
+              <th class="slot" id="8"></th>
+              <th class="slot" id="9"></th>
+              <th class="slot" id="10"></th>
+              <th class="slot" id="11"></th>
+              <th class="slot" id="12"></th>
+              <th class="slot" id="13"></th>
             </tr>
             <tr>
               <th class="daytime">Evening</th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
-              <th class="slot"></th>
+              <th class="slot" id="14"></th>
+              <th class="slot" id="15"></th>
+              <th class="slot" id="16"></th>
+              <th class="slot" id="17"></th>
+              <th class="slot" id="18"></th>
+              <th class="slot" id="19"></th>
+              <th class="slot" id="20"></th>
             </tr>
           </tbody>
         </table>
@@ -148,13 +148,14 @@
         <div class="form-group">
           <label>I prefer to work </label>
           <label class="checkbox-inline"> 
-            <input type="checkbox" name="workPrefRadios" value="on" checked> on campus
+            <input type="checkbox" name="workPref" value="on" checked> on campus
           </label>
           <label class="checkbox-inline"> 
-            <input type="checkbox" name="workPrefRadios" value="off"> off campus
+            <input type="checkbox" name="workPref" value="off"> off campus
           </label>
           <span class="requiredAsterisk"> *</span>
         </div>
+        <input type="text" name="courseId" value="{{courseId}}" hidden>
         <!-- Procress extra questions here --!>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
@@ -162,9 +163,6 @@
     {{/if}}
   </div>
 
-  <div class="container">
-    
-  </div>
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="js/bootstrap.js"></script>
   <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
