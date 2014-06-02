@@ -125,7 +125,7 @@ exports.waitingRoom = function(req, res) {
   newStudent.save(function(err, savedStudent) {
     if(err) console.log(err);
     else {
-      res.render("waitingRoom");
+      res.render("waitingRoom", {courseId: req.body.courseId});
     }
   });
 
