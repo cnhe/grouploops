@@ -45,3 +45,11 @@ th {
   -o-user-select: none;
   user-select: none;
 }
+
+.requiredAsterisk {
+  color: red;
+}
+
+.ratingDiv th {
+  padding: 2px;
+}
