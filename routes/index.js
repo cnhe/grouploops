@@ -87,6 +87,26 @@ exports.printCourses = function(req, res) {
   res.send(200);
 };
 
+exports.getSurveyProgress = function(req, res) {
+  var completed, total;
+  var courseId = ObjectId(req.query.courseId);
+  console.log(req.query);
+  Student.count({course_id: courseId}, function(err, count) {
+    if(err) console.log(err);
+    else {
+      completed = count;
+      Course.findById(courseId, function(err, course) {
+        if(err) console.log(err);
+        else {
+          total = course.num_students;
+          console.log("progress: " + completed/total);
+          res.json({progress: (completed/total).toFixed(2)});
+        }
+      });
+    }
+  });
+};
+
 exports.waitingRoom = function(req, res) {
   console.log(req.body);
   // Do validation here
@@ -105,7 +125,7 @@ exports.waitingRoom = function(req, res) {
   newStudent.save(function(err, savedStudent) {
     if(err) console.log(err);
     else {
-      res.render("waitingRoom");
+      res.render("waitingRoom", {courseId: req.body.courseId});
     }
   });
 
