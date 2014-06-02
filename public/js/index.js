@@ -73,6 +73,15 @@ function checkProfSurvey(formData, jqForm, options) {
   }
 }
 
+function updateProgressBar(){
+  var courseId = $("#courseId").value();
+  $.get("/getSurveyProgress?courseId="+courseId, function(data){
+     $("#classProgress").css('width',data.progress+'%');
+     $("#classProgress").aria-valuenow(data.progress);
+     $("#classProgress").html(data.progress+'%');
+   }
+}
+
 function showCourseUrl(rspTxt) {
   var courseId = rspTxt.courseId;
   $("#profFormSubmit").remove();
