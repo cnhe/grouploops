@@ -6,19 +6,18 @@ $(document).ready(function() {
 });
 
 function initializePage() {
-
-  initFreeTimeSelector();
-
-  $("#professorForm").ajaxForm({
-    dataType: "json",
-		semantic: true,
-		beforeSubmit: checkProfSurvey, 
-		success: showCourseUrl
+  // Redirect to home when jumbotron is clicked.
+  // should make navigation more intuitive..
+  $("#jumbotron").click(function() {
+    document.location = "/"; 
   });
 
+  initStudentSurvey();
+
+  initProfessorSurvey();
 }
 
-function initFreeTimeSelector() {
+function initStudentSurvey() {
   if(document.location.pathname !== "/student")
     return;
 
@@ -42,6 +41,19 @@ function initFreeTimeSelector() {
 
 }
 
+function initProfessorSurvey() {
+  if(document.location.pathname !== "/professor")
+    return;
+
+  $("#professorForm").ajaxForm({
+    dataType: "json",
+		semantic: true,
+		beforeSubmit: checkProfSurvey, 
+		success: showCourseUrl
+  });
+
+}
+
 function checkProfSurvey(formData, jqForm, options) {
   var form = jqForm[0];
 
@@ -53,6 +65,9 @@ function checkProfSurvey(formData, jqForm, options) {
 }
 
 function showCourseUrl(rspTxt) {
+  var courseId = rspTxt.courseId;
   $("#profFormSubmit").remove();
-  $("#professorForm").append("<a href='/student/"+rspTxt.courseId+"'>"+document.location.origin+"/student/"+rspTxt.courseId+"</a>");
+  $("#professorForm").append("<p>Your course id is " + courseId + ". Please save it and send the following link to your students.</p>");
+  $("#professorForm").append("<a href='/student?courseId="+courseId+"'>"+document.location.origin+"/student?courseId="+courseId+"</a>");
+  $("#professorForm").append("<br><p>To edit your course please visit: <a href='/editCourse?courseId='"+courseId+"></a></p>");
 }

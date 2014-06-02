@@ -19,7 +19,7 @@
 
 <body>
   <div class="container">
-    <div class="jumbotron" style="background-image: url('img/sky.png')">
+    <div id="jumbotron" class="jumbotron" style="background-image: url('img/sky.png')">
       <center>
       <h1>GroupLoops</h1>
       <p>A simple utility to form optimized groups for projects or studying.</p>
@@ -30,7 +30,7 @@
     <div class="formDiv">
       <form role="form" id="professorForm" method="post" action="/createCourse">
         <div class="form-group">
-          <label for="courseName">Class Name</label>
+          <label for="courseName">Course Name</label>
           <input type="text" class="form-control" name="courseName" placeholder="Example: COGS 121" required>
         </div>
         <div class="form-group">
@@ -148,7 +148,7 @@
             <label class="checkbox-inline"> <input type="checkbox" name="workPrefRadios" value="on" checked> on campus</label>
             <label class="checkbox-inline"> <input type="checkbox" name="workPrefRadios" value="off"> off campus</label>
         </div>
-       
+        <!-- Procress extra questions here --!>
         <button type="submit" class="btn btn-default">Submit</button>
       </form>
     </div>

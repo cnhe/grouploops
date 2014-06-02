@@ -26,9 +26,12 @@ app.get('/', index.welcome);
 app.get('/professor', index.professorView);
 app.get('/student', index.studentView);
 app.get('/groupview', group.view);
+app.get('/editCourse', index.editCourse);
 app.get('/checkCourseId', index.checkCourseId);
+app.get('/printCourses', index.printCourses);
 
 app.post('/createCourse', index.createCourse);
+app.post('/deleteCourse', index.deleteCourse);
 
 //set environment ports and start application
 app.set('port', process.env.PORT || 3000);

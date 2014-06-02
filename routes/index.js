@@ -1,5 +1,7 @@
 var models = require('../models');
 var mongoose = require('mongoose');
+var Course = models.Course;
+var ObjectId = mongoose.Types.ObjectId;
 
 exports.professorView = function(req, res) {
   res.render('survey', {professor: 1});
@@ -15,10 +17,10 @@ exports.welcome = function(req, res) {
 
 exports.checkCourseId = function(req, res) {
   try {
-    var courseId = mongoose.Types.ObjectId(req.query.courseId);
-    models.Course.find({ _id: courseId }, function(err, course) {
+    var courseId = ObjectId(req.query.courseId);
+    Course.findById(courseId, function(err, course) {
       if(err) console.log(err);
-      if(course.length == 0)
+      if(!course)
         res.json({err: "Course does not exist"});
     });
   } catch(e) {
@@ -30,9 +32,8 @@ exports.checkCourseId = function(req, res) {
 
 exports.createCourse = function(req, res) {
   // Do validation here
-
   
-  var newCourse = new models.Course({
+  var newCourse = new Course({
     name: req.body.courseName,
     professor: req.body.profName,
     num_students: req.body.numStudents,
@@ -46,3 +47,41 @@ exports.createCourse = function(req, res) {
     }
   });
 };
+
+exports.editCourse = function(req, res) {
+  try {
+    var courseId = ObjectId(req.query.courseId);
+    
+    Course.findById(courseId, function(err, course) {
+      if(err) {
+        console.log(err);
+        res.send("invalid course id");
+      }
+      else {
+        console.log("Editing course:" + course);
+        res.render("editCourse", {course: course});
+      }
+    });
+  } catch(e) {
+    console.log(e);
+    res.send("invalid course id");
+    return;
+  }
+}
+
+exports.deleteCourse = function(req, res) {
+  var courseId = ObjectId(req.query.courseId);
+  Course.findByIdAndRemove(courseId, function(err, course) {
+    if(err) console.log(err);
+    else {
+      res.send(200);
+    }
+  });
+}
+
+exports.printCourses = function(req, res) {
+  Course.find(function(err, courses) {
+    console.log(courses);
+  });
+  res.send(200);
+}
