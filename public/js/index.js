@@ -90,6 +90,7 @@ function updateProgressBar(){
     var progress = Math.round(100*data.progress);
      $("#classProgress").css('width',progress+'%');
      $("#classProgress").html(progress+'%');
+     if(progress==100) $("#finishedMessage").css('display', "block");
    });
 }
 
