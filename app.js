@@ -31,7 +31,8 @@ app.get('/checkCourseId', index.checkCourseId);
 app.get('/printCourses', index.printCourses);
 app.get('/getSurveyProgress', index.getSurveyProgress);
 
-app.post('/waitingRoom', index.waitingRoom);
+app.get('/waitingRoom', index.waitingRoom);
+app.post('/createNewStudent', index.createNewStudent);
 app.post('/createCourse', index.createCourse);
 app.post('/deleteCourse', index.deleteCourse);
 

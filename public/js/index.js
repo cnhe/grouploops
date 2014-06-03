@@ -39,6 +39,10 @@ function initStudentSurvey() {
     var somethingToSet = true;
   });
 
+  $("#studentForm").ajaxForm({
+    success: function() { document.location = "/waitingRoom?courseId="+$("input[name=courseId]").val(); }
+  });
+
   $("#studentForm :submit").click(function(e) {
     var availArray = [];
     $(".slot.success").each(function() {
@@ -46,7 +50,6 @@ function initStudentSurvey() {
     });
     
     $("#studentForm").append($("<input>").attr({type: "hidden", name: "avail", value: availArray.join(',')}));
-    $("#studentForm").submit();
   });
 }
 
@@ -74,12 +77,12 @@ function checkProfSurvey(formData, jqForm, options) {
 }
 
 function updateProgressBar(){
-  var courseId = $("#courseId").value();
+  var courseId = $("#courseId").val();
   $.get("/getSurveyProgress?courseId="+courseId, function(data){
-     $("#classProgress").css('width',data.progress+'%');
-     $("#classProgress").aria-valuenow(data.progress);
-     $("#classProgress").html(data.progress+'%');
-   }
+    var progress =Math.round(100*data.progress);
+     $("#classProgress").css('width',progress+'%');
+     $("#classProgress").html(progress+'%');
+   });
 }
 
 function showCourseUrl(rspTxt) {
