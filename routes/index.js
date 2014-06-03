@@ -83,8 +83,8 @@ exports.deleteCourse = function(req, res) {
 exports.printCourses = function(req, res) {
   Course.find(function(err, courses) {
     console.log(courses);
+    res.json(courses);
   });
-  res.send(200);
 };
 
 exports.getSurveyProgress = function(req, res) {
