@@ -40,10 +40,18 @@ function initStudentSurvey() {
   });
 
   $("#studentForm").ajaxForm({
-    success: function() { document.location = "/waitingRoom?courseId="+$("input[name=courseId]").val(); }
+    success: function(rspTxt, stat) {
+      console.log(rspTxt + "   "+ stat)  
+     //TODO
+     // document.location = "/waitingRoom?courseId="+$("input[name=courseId]").val(); 
+    }
   });
 
   $("#studentForm :submit").click(function(e) {
+    if($("input[name=avail]").length > 0) {
+      return;
+    }
+
     var availArray = [];
     $(".slot.success").each(function() {
       availArray.push(this.id);
@@ -79,7 +87,7 @@ function checkProfSurvey(formData, jqForm, options) {
 function updateProgressBar(){
   var courseId = $("#courseId").val();
   $.get("/getSurveyProgress?courseId="+courseId, function(data){
-    var progress =Math.round(100*data.progress);
+    var progress = Math.round(100*data.progress);
      $("#classProgress").css('width',progress+'%');
      $("#classProgress").html(progress+'%');
    });
@@ -90,5 +98,5 @@ function showCourseUrl(rspTxt) {
   $("#profFormSubmit").remove();
   $("#professorForm").append("<p>Your course id is " + courseId + ". Please save it and send the following link to your students.</p>");
   $("#professorForm").append("<a href='/student?courseId="+courseId+"'>"+document.location.origin+"/student?courseId="+courseId+"</a>");
-  $("#professorForm").append("<br><p>To edit your course please visit: <a href='/editCourse?courseId='"+courseId+"></a></p>");
+  $("#professorForm").append("<br><p>To edit your course please visit: <a href='/editCourse?courseId='"+courseId+">"+document.location.origin+"/editCourse?courseId="+courseId+"</a></p>");
 }

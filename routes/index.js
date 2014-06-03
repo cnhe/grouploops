@@ -83,8 +83,8 @@ exports.deleteCourse = function(req, res) {
 exports.printCourses = function(req, res) {
   Course.find(function(err, courses) {
     console.log(courses);
+    res.json(courses);
   });
-  res.send(200);
 };
 
 exports.getSurveyProgress = function(req, res) {
@@ -109,27 +109,38 @@ exports.getSurveyProgress = function(req, res) {
 
 exports.createNewStudent = function(req, res) {
   console.log(req.body);
+  var courseId = ObjectId(req.body.courseId);
   // Do validation here
 
-  var studentObj = {
-    name: req.body.name,
-    student_id: req.body.studentId,
-    email: req.body.emailAddr,
-    phone: req.body.phone,
-    course_id: ObjectId(req.body.courseId),
-    leader_rating: parseInt(req.body.leaderRadios),
-    work_pref: typeof(req.body.workPref) === 'string' ? req.body.workPref === 'off' ? 0 : 1 : 2,
-    avail: !req.body.avail ? [] : req.body.avail.split(',').map(function(e) {return parseInt(e);})
-  };
-  
-  var newStudent = new Student(studentObj);
+  Course.findById(courseId, 'num_students', function(err, course) {
+    var maxStuCount = course.num_students;  
+    Student.count(courseId, function(err, stuCount) {
+      if(stuCount >= maxStuCount) {
+        res.send(400);
+        return;
+      } else {
+        var studentObj = {
+          name: req.body.name,
+          student_id: req.body.studentId,
+          email: req.body.emailAddr,
+          phone: req.body.phone,
+          course_id: ObjectId(req.body.courseId),
+          leader_rating: parseInt(req.body.leaderRadios),
+          work_pref: typeof(req.body.workPref) === 'string' ? req.body.workPref === 'off' ? 0 : 1 : 2,
+          avail: !req.body.avail ? [] : req.body.avail.split(',').map(function(e) {return parseInt(e);})
+        };
+        
+        var newStudent = new Student(studentObj);
 
-  newStudent.save(function(err, savedStudent) {
-    if(err) console.log(err);
-    else {
-      res.send(200);
-      return;
-    }
+        newStudent.save(function(err, savedStudent) {
+          if(err) console.log(err);
+          else {
+            res.send(200);
+            return;
+          }
+        });
+      }
+    });
   });
 }
 
