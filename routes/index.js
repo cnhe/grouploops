@@ -107,11 +107,11 @@ exports.getSurveyProgress = function(req, res) {
   });
 };
 
-exports.waitingRoom = function(req, res) {
+exports.createNewStudent = function(req, res) {
   console.log(req.body);
   // Do validation here
-  
-  var newStudent = new Student({
+
+  var studentObj = {
     name: req.body.name,
     student_id: req.body.studentId,
     email: req.body.emailAddr,
@@ -120,13 +120,19 @@ exports.waitingRoom = function(req, res) {
     leader_rating: parseInt(req.body.leaderRadios),
     work_pref: typeof(req.body.workPref) === 'string' ? req.body.workPref === 'off' ? 0 : 1 : 2,
     avail: !req.body.avail ? [] : req.body.avail.split(',').map(function(e) {return parseInt(e);})
-  });
+  };
+  
+  var newStudent = new Student(studentObj);
 
   newStudent.save(function(err, savedStudent) {
     if(err) console.log(err);
     else {
-      res.render("waitingRoom", {courseId: req.body.courseId});
+      res.send(200);
+      return;
     }
   });
+}
 
+exports.waitingRoom = function(req, res) {
+  res.render("waitingRoom", {courseId: req.query.courseId});
 };
