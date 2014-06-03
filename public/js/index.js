@@ -40,18 +40,17 @@ function initStudentSurvey() {
   });
 
   $("#studentForm").ajaxForm({
+    beforeSubmit: checkStudentSurvey,
     success: function(rspTxt, stat) {
-      console.log(rspTxt + "   "+ stat)  
-     //TODO
-     // document.location = "/waitingRoom?courseId="+$("input[name=courseId]").val(); 
+      if(!rspTxt.status)
+        $("#maxStudentErrMsg").show();
+      else
+        document.location = "/waitingRoom?courseId="+$("input[name=courseId]").val(); 
     }
   });
 
   $("#studentForm :submit").click(function(e) {
-    if($("input[name=avail]").length > 0) {
-      return;
-    }
-
+    $("input[name=avail]").remove();
     var availArray = [];
     $(".slot.success").each(function() {
       availArray.push(this.id);
@@ -59,6 +58,28 @@ function initStudentSurvey() {
     
     $("#studentForm").append($("<input>").attr({type: "hidden", name: "avail", value: availArray.join(',')}));
   });
+}
+
+// Checks the form data and display error messages
+function checkStudentSurvey() {
+  if(document.location.pathname !== "/student")
+    return;
+  
+  var err = 0;
+
+  $(".errMsg").hide();
+
+  if($(".slot.success").length == 0) {
+    $("#missingAvail").show();
+    ++err;
+  }
+    
+  if($("input[name=workPref]").fieldValue().length == 0) {
+    $("#missingWorkPref").show();
+    ++err;
+  }
+
+  return !err;
 }
 
 function initProfessorSurvey() {

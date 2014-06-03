@@ -58,3 +58,8 @@ th {
 .ratingDiv th {
   padding: 2px;
 }
+
+.errMsg {
+  display: none;
+  color: red;
+}
