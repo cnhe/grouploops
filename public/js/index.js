@@ -110,9 +110,10 @@ function checkProfSurvey(formData, jqForm, options) {
 function showCourseUrl(rspTxt) {
   var courseId = rspTxt.courseId;
   $("#profFormSubmit").remove();
-  $("#professorForm").append("<p>Your course id is " + courseId + ". Please save it and send the following link to your students.</p>");
-  $("#professorForm").append("<a href='/student?courseId="+courseId+"'>"+document.location.origin+"/student?courseId="+courseId+"</a>");
-  $("#professorForm").append("<br><p>To edit your course please visit: <a href='/editCourse?courseId='"+courseId+">"+document.location.origin+"/editCourse?courseId="+courseId+"</a></p>");
+  $("#professorForm").append("<h2 id='createdCourse'>Course ID: <span id='courseID'>" + courseId 
+                           + "</span><br/> Student survey link: "
+                           + "<a href='/student?courseId="+courseId+"'>"+document.location.origin+"/student?courseId="+courseId+"</a></h2>");
+  $("#professorForm").append("<br><h3>Edit Course: <a href='/editCourse?courseId='"+courseId+">"+document.location.origin+"/editCourse?courseId="+courseId+"</a></h3>");
 }
 
 function initWaitingRoom() {
