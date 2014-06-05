@@ -17,6 +17,7 @@
       <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
       <link rel="stylesheet" type="text/css" href="css/styles.css">
       <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900,200' rel='stylesheet' type='text/css'>
+  <script src="https://code.jquery.com/jquery.js"></script>
 </head>
 
 <body>
@@ -31,15 +32,77 @@
     
     {{#each groups}}
       <div class="well">
+        <script>
+          var avail = {};
+        </script>
         {{#each members}}
           <p><strong>Name: </strong>{{name}}   <strong>Email: </strong>{{email}}</p>
+          <script>
+            var curr = [{{avail}}];
+            for(var i = 0; i < curr.length; ++i) {
+              if(!avail[curr[i]])
+                avail[curr[i]] = 1;
+              else
+                ++avail[curr[i]];
+            }
+          </script>
         {{/each}}
+<table class="table table-condensed" onmouseup="down=false;deselect=false;" onselectstart="return false" style="width: 50%;">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="weekday">Sun</th>
+                <th class="weekday">Mon</th>
+                <th class="weekday">Tue</th>
+                <th class="weekday">Wed</th>
+                <th class="weekday">Thur</th>
+                <th class="weekday">Fri</th>
+                <th class="weekday">Sat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="daytime">Morning</th>
+                <th class="slot" id="{{id}}_0"></th>
+                <th class="slot" id="{{id}}_1"></th>
+                <th class="slot" id="{{id}}_2"></th>
+                <th class="slot" id="{{id}}_3"></th>
+                <th class="slot" id="{{id}}_4"></th>
+                <th class="slot" id="{{id}}_5"></th>
+                <th class="slot" id="{{id}}_6"></th>
+              </tr>
+              <tr>
+                <th class="daytime">Afternoon</th>
+                <th class="slot" id="{{id}}_7"></th>
+                <th class="slot" id="{{id}}_8"></th>
+                <th class="slot" id="{{id}}_9"></th>
+                <th class="slot" id="{{id}}_10"></th>
+                <th class="slot" id="{{id}}_11"></th>
+                <th class="slot" id="{{id}}_12"></th>
+                <th class="slot" id="{{id}}_13"></th>
+              </tr>
+              <tr>
+                <th class="daytime">Evening</th>
+                <th class="slot" id="{{id}}_14"></th>
+                <th class="slot" id="{{id}}_15"></th>
+                <th class="slot" id="{{id}}_16"></th>
+                <th class="slot" id="{{id}}_17"></th>
+                <th class="slot" id="{{id}}_18"></th>
+                <th class="slot" id="{{id}}_19"></th>
+                <th class="slot" id="{{id}}_20"></th>
+              </tr>
+            </tbody>
+          </table>
       </div>
+      <script>
+        for(var i = 0; i < Object.keys(avail).length; ++i){
+          $("#{{id}}_"+Object.keys(avail)[i]).text(avail[Object.keys(avail)[i]]);
+        }
+      </script>
     {{/each}}
     
    
  </div>
-<script src="https://code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 </body>
 </html>
