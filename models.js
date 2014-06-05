@@ -24,7 +24,8 @@ var StudentSchema = new mongoose.Schema({
   "course_id": ObjectId,   // only if non distinct students
   "leader_rating": Number,
   "work_pref": Number, // 0 = off campus, 1 = on, 2 = either
-  "avail": Array
+  "avail": Array,
+  "avail_len": Number
 });
 
 var GroupSchema = new mongoose.Schema({

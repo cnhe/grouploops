@@ -29,7 +29,10 @@ app.get('/groupview', group.view);
 app.get('/editCourse', index.editCourse);
 app.get('/checkCourseId', index.checkCourseId);
 app.get('/printCourses', index.printCourses);
+app.get('/printStudents', index.printStudents);
 app.get('/getSurveyProgress', index.getSurveyProgress);
+app.get('/test', index.test);
+app.get('/newStud', index.newStud);
 
 app.get('/waitingRoom', index.waitingRoom);
 app.post('/createNewStudent', index.createNewStudent);
