@@ -1,3 +1,5 @@
+
+
 .hidden {
   display: none;
 }
@@ -5,7 +7,17 @@
 body {
   padding-top: 8px;
   padding-bottom: 15px;
+  font-family: 'Source Sans Pro', sans-serif;
 }
+
+h1 {
+  font-weight: 600;
+}
+
+a:hover, a:focus {
+  text-decoration: none;
+}
+
 
 .welcome { 
 	background: url("../img/sky.png") no-repeat center center fixed;
@@ -36,9 +48,21 @@ body {
 
 .loginLinks a {
   color: black;
-  padding: 2px;
-  margin: 3px;
-  border: 2px solid black;
+  padding: 10px;
+  margin: 5px;
+  font-weight: 550;
+  background-color: #91F89C;
+}
+
+.loginLinks a:hover{
+  background-color: #4FAC75
+}
+
+.alert-danger {
+  background-image:none;
+  background-color: #FFBABA;
+  width: 40%;
+  margin: auto;
 }
 
 th {
@@ -62,4 +86,26 @@ th {
 .errMsg {
   display: none;
   color: red;
+}
+
+#jumbotron {
+  background-image: url('../img/sky.png');
+  background-size: 100%;
+}
+
+.form-control {
+  width: 50%;
+}
+
+.form-group{
+  margin-bottom: 20px;
+}
+
+.surveyForm form .form-group input{
+  height: 50px;
+}
+
+.surveyForm form .form-group label, #addQuestions{
+  font-weight: 200;
+  font-size: 30px;
 }

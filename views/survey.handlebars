@@ -16,11 +16,12 @@
       <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
       <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.css">
       <link rel="stylesheet" type="text/css" href="css/index.css">
+      <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900,200' rel='stylesheet' type='text/css'>
 </head>
 
 <body>
   <div class="container">
-    <div id="jumbotron" class="jumbotron" style="background-image: url('img/sky.png')">
+    <div id="jumbotron" class="jumbotron">
       <center>
       <h1>GroupLoops</h1>
       <p>A simple utility to form optimized groups for projects or studying.</p>
@@ -28,103 +29,105 @@
     </div>
 
     {{#if professor}}
-    <div class="formDiv">
-      <form role="form" id="professorForm" method="post" action="/createCourse">
+    <div class="formDiv surveyForm">
+      <form class="form-horizontal" role="form" id="professorForm" method="post" action="/createCourse">
         <div class="form-group">
-          <label for="courseName">Course Name</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label" for="courseName">Course Name</label>
           <input type="text" class="form-control" name="courseName" placeholder="Example: COGS 121" required>
         </div>
         <div class="form-group">
-          <label for="profName">Professor Name</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label" for="profName">Professor Name</label>
           <input type="text" class="form-control" name="profName" placeholder="Example: Nadir Weibel" required>
         </div>
         <div class="form-group">
-          <label for="numStudents">Number of Students</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label" for="numStudents">Number of Students</label>
           <input type="number" class="form-control" name="numStudents" placeholder="Example: 42" required>
         </div>
         <div class="form-group">
-          <label for="groupSize">Desired Group Size</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label" for="groupSize">Desired Group Size</label>
           <input type="number" class="form-control" name="groupSize" placeholder="Example: 4" required>
         </div>
-        <div class="checkbox">
-          <label>
-            <input type="checkbox"> Extra questions?
-          </label>
+        <div id = "customQuestions" style="padding-bottom: 10px;">
+          <label class="col-sm-4 control-label"></label>
+           <a href="" id="addQuestions"> <span class="glyphicon glyphicon-plus"></span> Add custom questions?</a>
         </div>
-        <input type="submit" class="btn btn-default" id="profFormSubmit">
+
+        <center><input type="submit" class="btn btn-lg btn-default" id="profFormSubmit" value="Create Survey"></center>
       </form>
     </div>
     {{/if}}
 
     {{#if student}}
-    <div class="formDiv">
-      <form id="studentForm" role="form" method="post" action="createNewStudent">
+    <div class="formDiv surveyForm">
+      <form class="form-horizontal" id="studentForm" role="form" method="post" action="createNewStudent" >
         <div class="form-group">
-          <label for="name">Name</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label" for="name">Name</label>
           <input type="text" class="form-control" name="name" placeholder="Example: Jon Student" required>
         </div>
         <div class="form-group">
-          <label for="id">Student Id</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label" for="id">Student ID</label>
           <input type="text" class="form-control" name="studentId" placeholder="Example: A09876543" required>
         </div>
         <div class="form-group">
-          <label for="emailAddr">Email Address</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label" for="emailAddr">Email Address</label>
           <input type="email" class="form-control" name="emailAddr" placeholder="Example: jstu@ucsd.edu" required>
         </div>
         <div class="form-group">
-          <label for="phone">Mobile Number</label>
+          <label class="col-sm-4 control-label" for="phone">Mobile Number (optional)</label>
           <input type="tel" class="form-control" name="phone" placeholder="Example: (123) 456-7890">
         </div>
-        <label>Please highlight your availability</label><span class="requiredAsterisk"> *</span>
-        <span class="errMsg" id="missingAvail">Please highlight at least one time your are available.</span>
-        <table class="table table-condensed" id="availabilityTable" onmouseup="down=false;deselect=false;" onselectstart="return false">
-          <thead>
-            <tr>
-              <th></th>
-              <th class="weekday">Sun</th>
-              <th class="weekday">Mon</th>
-              <th class="weekday">Tue</th>
-              <th class="weekday">Wed</th>
-              <th class="weekday">Thur</th>
-              <th class="weekday">Fri</th>
-              <th class="weekday">Sat</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <th class="daytime">Morning</th>
-              <th class="slot" id="0"></th>
-              <th class="slot" id="1"></th>
-              <th class="slot" id="2"></th>
-              <th class="slot" id="3"></th>
-              <th class="slot" id="4"></th>
-              <th class="slot" id="5"></th>
-              <th class="slot" id="6"></th>
-            </tr>
-            <tr>
-              <th class="daytime">Afternoon</th>
-              <th class="slot" id="7"></th>
-              <th class="slot" id="8"></th>
-              <th class="slot" id="9"></th>
-              <th class="slot" id="10"></th>
-              <th class="slot" id="11"></th>
-              <th class="slot" id="12"></th>
-              <th class="slot" id="13"></th>
-            </tr>
-            <tr>
-              <th class="daytime">Evening</th>
-              <th class="slot" id="14"></th>
-              <th class="slot" id="15"></th>
-              <th class="slot" id="16"></th>
-              <th class="slot" id="17"></th>
-              <th class="slot" id="18"></th>
-              <th class="slot" id="19"></th>
-              <th class="slot" id="20"></th>
-            </tr>
-          </tbody>
-        </table>
+        <div class="form-group" >
+          <label class="col-sm-4 control-label">Availability</label>
+          <span class="errMsg" id="missingAvail">Please highlight at least one time your are available.</span>
+          <table class="table table-condensed" id="availabilityTable" onmouseup="down=false;deselect=false;" onselectstart="return false" style="width: 50%;">
+            <thead>
+              <tr>
+                <th></th>
+                <th class="weekday">Sun</th>
+                <th class="weekday">Mon</th>
+                <th class="weekday">Tue</th>
+                <th class="weekday">Wed</th>
+                <th class="weekday">Thur</th>
+                <th class="weekday">Fri</th>
+                <th class="weekday">Sat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th class="daytime">Morning</th>
+                <th class="slot" id="0"></th>
+                <th class="slot" id="1"></th>
+                <th class="slot" id="2"></th>
+                <th class="slot" id="3"></th>
+                <th class="slot" id="4"></th>
+                <th class="slot" id="5"></th>
+                <th class="slot" id="6"></th>
+              </tr>
+              <tr>
+                <th class="daytime">Afternoon</th>
+                <th class="slot" id="7"></th>
+                <th class="slot" id="8"></th>
+                <th class="slot" id="9"></th>
+                <th class="slot" id="10"></th>
+                <th class="slot" id="11"></th>
+                <th class="slot" id="12"></th>
+                <th class="slot" id="13"></th>
+              </tr>
+              <tr>
+                <th class="daytime">Evening</th>
+                <th class="slot" id="14"></th>
+                <th class="slot" id="15"></th>
+                <th class="slot" id="16"></th>
+                <th class="slot" id="17"></th>
+                <th class="slot" id="18"></th>
+                <th class="slot" id="19"></th>
+                <th class="slot" id="20"></th>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <div class="form-group ratingDiv">
-          <label>I am a leader.</label><span class="requiredAsterisk"> *</span>
+          <label class="col-sm-4 control-label">I would like to be a leader.</label>
           <table>
             <thead>
               <th></th>
@@ -147,21 +150,22 @@
           </table>
         </div>
         <div class="form-group">
-          <label>I prefer to work </label>
+          <label class="col-sm-4 control-label">I am available to work </label>
           <label class="checkbox-inline"> 
             <input type="checkbox" name="workPref" value="on" checked> on campus
           </label>
           <label class="checkbox-inline"> 
             <input type="checkbox" name="workPref" value="off"> off campus
           </label>
-          <span class="requiredAsterisk"> *</span>
           <span class="errMsg" id="missingWorkPref">Please select at least one preferred work place.</span>
         </div>
         <input type="text" name="courseId" value="{{courseId}}" hidden>
-        <!-- Procress extra questions here --!>
+        <!-- Process extra questions here --!>
         <div class="form-group">
-          <button type="submit" class="btn btn-default">Submit</button>
+          <center>
+          <button type="submit" class="btn btn-lg btn-default">Submit</button>
           <span class="errMsg" id="maxStudentErrMsg">The maximum number of students have been reached for this course.</span>
+          </center>
         </div>
       </form>
     </div>
