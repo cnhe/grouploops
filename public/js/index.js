@@ -15,6 +15,8 @@ function initializePage() {
   initStudentSurvey();
 
   initProfessorSurvey();
+
+  initWaitingRoom();
 }
 
 function initStudentSurvey() {
@@ -105,20 +107,34 @@ function checkProfSurvey(formData, jqForm, options) {
   }
 }
 
-function updateProgressBar(){
-  var courseId = $("#courseId").val();
-  $.get("/getSurveyProgress?courseId="+courseId, function(data){
-    var progress = Math.round(100*data.progress);
-     $("#classProgress").css('width',progress+'%');
-     $("#classProgress").html(progress+'%');
-     if(progress==100) $("#finishedMessage").css('display', "block");
-   });
-}
-
 function showCourseUrl(rspTxt) {
   var courseId = rspTxt.courseId;
   $("#profFormSubmit").remove();
   $("#professorForm").append("<p>Your course id is " + courseId + ". Please save it and send the following link to your students.</p>");
   $("#professorForm").append("<a href='/student?courseId="+courseId+"'>"+document.location.origin+"/student?courseId="+courseId+"</a>");
   $("#professorForm").append("<br><p>To edit your course please visit: <a href='/editCourse?courseId='"+courseId+">"+document.location.origin+"/editCourse?courseId="+courseId+"</a></p>");
+}
+
+function initWaitingRoom() {
+  if(document.location.pathname !== "/waitingRoom")
+    return;
+
+  function updateProgressBar(){
+    var courseId = $("#courseId").val();
+    $.get("/getSurveyProgress?courseId="+courseId, function(data){
+      var progress = Math.round(100*data.progress);
+       $("#classProgress").css('width',progress+'%');
+       $("#classProgress").html(progress+'%');
+       if(progress==100) {
+         $("#finishedMessage").css('display', "block");
+         window.clearInterval(intervalId);
+         $.get("/genGroups?courseId="+courseId+"&groupBy=leader,best match", function(data) {
+           document.location = "/groups?courseId="+courseId;
+         });
+       }
+     });
+  }
+  updateProgressBar();
+  var intervalId = window.setInterval(updateProgressBar, 10000); 
+
 }

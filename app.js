@@ -25,13 +25,14 @@ app.use(express.bodyParser());
 app.get('/', index.welcome);
 app.get('/professor', index.professorView);
 app.get('/student', index.studentView);
-app.get('/groupview', group.view);
+app.get('/groups', index.groups);
 app.get('/editCourse', index.editCourse);
 app.get('/checkCourseId', index.checkCourseId);
 app.get('/printCourses', index.printCourses);
 app.get('/printStudents', index.printStudents);
+app.get('/printGroups', index.printGroups);
 app.get('/getSurveyProgress', index.getSurveyProgress);
-app.get('/test', index.test);
+app.get('/genGroups', index.genGroups);
 app.get('/newStud', index.newStud);
 
 app.get('/waitingRoom', index.waitingRoom);

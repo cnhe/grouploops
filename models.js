@@ -25,7 +25,8 @@ var StudentSchema = new mongoose.Schema({
   "leader_rating": Number,
   "work_pref": Number, // 0 = off campus, 1 = on, 2 = either
   "avail": Array,
-  "avail_len": Number
+  "avail_len": Number,
+  "group_id": ObjectId
 });
 
 var GroupSchema = new mongoose.Schema({
@@ -40,6 +41,7 @@ var StudentCourseSchema = new mongoose.Schema({
   "course_id": ObjectId
 });
 
+// Same as above
 var StudentGroupsSchema = new mongoose.Schema({
   "student_id": ObjectId,
   "group_id": ObjectId 

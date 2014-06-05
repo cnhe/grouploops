@@ -22,58 +22,22 @@
   <div class="container">
     <div class="jumbotron" style="background-image: url('img/sky.png')">
       <center>
-      <h1>Your Group</h1>
-      <p>You have been sorted into the following group!</p>
+      <h1>GroupsLoops</h1>
+      <p>A simple utility to form optimized groups for projects or studying.</p>
       </center>
     </div>
+    <h1>Here are the suggested groups for this class.</h1>
     
-    <div id = "grouppage">
-    <div class= "profimg">
-      <img class = "profileimg" src = "img/profile_male.PNG" >
-      <div class = "info">
-        <p>Member 1</p>
-        <p>Email</p>
-        <p>Description</p>
+    {{#each groups}}
+      <div class="well">
+        {{#each members}}
+          <p><strong>Name: </strong>{{name}}   <strong>Email: </strong>{{email}}</p>
+        {{/each}}
       </div>
-    </div>
-
-    <div class= "profimg">
-      <img class = "profileimg" src = "img/profile_female.PNG" >
-      <div class = "info">
-        <p>Member 1</p>
-        <p>Email</p>
-        <p>Description</p>
-      </div>
-    </div>
-
-    <div class= "profimg">
-      <img class = "profileimg" src = "img/profile_male.PNG" >
-      <div class = "info">
-        <p>Member 1</p>
-        <p>Email</p>
-        <p>Description</p>
-      </div>
-    </div>
-
-    <div class= "profimg">
-      <img class = "profileimg" src = "img/profile_female.PNG" >
-      <div class = "info">
-        <p>Member 1</p>
-        <p>Email</p>
-        <p>Description</p>
-      </div>
-    </div>
-
-  </div>
-
-
-
-
-  </div>
-
-  <div class="container">
+    {{/each}}
     
-  </div>
+   
+ </div>
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="js/bootstrap.js"></script>
 </body>
