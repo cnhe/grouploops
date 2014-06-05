@@ -10,7 +10,7 @@ var group = require('./routes/group');
 
 //database setup
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGOLAB_URL || 'mongodb://localhost/grouploops');
+mongoose.connect(process.env.MONGOLAB_URI || 'mongodb://localhost/grouploops');
 
 app.locals.mongoose = mongoose;
 
