@@ -95,6 +95,26 @@ function initProfessorSurvey() {
 		success: showCourseUrl
   });
 
+  var numQuestions = 0;
+
+  $('#addQuestions').click(function() {
+    ++numQuestions;
+    if(numQuestions == 1){
+      $("#customQuestionContainer").removeClass('hidden');
+    }
+    else{
+      var questionClone = $("#customQuestion1").clone();
+      $('.question-label', questionClone).text("Question "+numQuestions);
+      questionClone.attr("id", "customQuestion"+numQuestions);
+      questionClone.appendTo("#customQuestionContainer");
+    }
+  });
+
+  $('.questionType .btn').click(function() {
+    $(this).siblings().removeClass('btn-primary').addClass('btn-default');
+    $(this).removeClass('btn-default').addClass('btn-primary');
+  });
+
 }
 
 function checkProfSurvey(formData, jqForm, options) {
