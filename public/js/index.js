@@ -131,12 +131,14 @@ function checkProfSurvey(formData, jqForm, options) {
 }
 
 function showCourseUrl(rspTxt) {
+  console.log(rspTxt);
   var courseId = rspTxt.courseId;
+  console.log(rspTxt.courseId);
   $("#profFormSubmit").remove();
   $("#professorForm").append("<h2 id='createdCourse'>Course ID: <span id='courseID'>" + courseId 
                            + "</span><br/> Student survey link: "
                            + "<a href='/student?courseId="+courseId+"'>"+document.location.origin+"/student?courseId="+courseId+"</a></h2>");
-  $("#professorForm").append("<br><h3>Edit Course: <a href='/editCourse?courseId='"+courseId+">"+document.location.origin+"/editCourse?courseId="+courseId+"</a></h3>");
+  $("#professorForm").append("<br><h3>Edit Course: <a href='/editCourse?courseId="+courseId+"'>"+document.location.origin+"/editCourse?courseId="+courseId+"</a></h3>");
 }
 
 function initWaitingRoom() {

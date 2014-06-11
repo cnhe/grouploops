@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 
 var CourseSchema = new mongoose.Schema({
   "name": String, 
+  "course_id": String,
   "professor": String,
   "num_students": Number,
   "group_size": Number
@@ -21,7 +22,7 @@ var StudentSchema = new mongoose.Schema({
   "student_id": String,
   "email": String,
   "phone": String,
-  "course_id": ObjectId,   // only if non distinct students
+  "course_id": String,   // only if non distinct students
   "leader_rating": Number,
   "work_pref": Number, // 0 = off campus, 1 = on, 2 = either
   "avail": Array,

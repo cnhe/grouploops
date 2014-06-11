@@ -19,7 +19,7 @@ exports.welcome = function(req, res) {
 };
 
 exports.groups = function(req, res) {
-  var courseId = ObjectId(req.query.courseId);
+  //var courseId = ObjectId(req.query.courseId);
   var studentId = ObjectId(req.query.studentId);
   Student.findById(studentId, function(err, student) {
     if(err) console.log(err);
@@ -36,8 +36,8 @@ exports.groups = function(req, res) {
 /* Checks if the queried course id is valid or not */
 exports.checkCourseId = function(req, res) {
   try {
-    var courseId = ObjectId(req.query.courseId);
-    Course.findById(courseId, function(err, course) {
+    var courseId = req.query.courseId;
+    Course.findOne({course_id: courseId}, function(err, course) {
       if(err) console.log(err);
       if(!course)
         res.json({err: "Course does not exist"});
@@ -50,30 +50,41 @@ exports.checkCourseId = function(req, res) {
 };
 
 /* Creates the course and saves it to the database */
-exports.createCourse = function(req, res) {
-  // Do validation here
-  
-  var newCourse = new Course({
-    name: req.body.courseName,
-    professor: req.body.profName,
-    num_students: req.body.numStudents,
-    group_size: req.body.groupSize
-  });
+exports.createCourse = createCourse;
 
-  newCourse.save(function(err, savedCourse) {
+function createCourse(req, res) {
+  // Do validation here
+  var id = makeid();
+  Course.findOne({course_id: id}, function(err, course) {
     if(err) console.log(err);
-    else {
-      res.json({courseId: savedCourse._id});
+    if(!course) {
+      var newCourse = new Course({
+        name: req.body.courseName,
+        course_id: id,
+        professor: req.body.profName,
+        num_students: req.body.numStudents,
+        group_size: req.body.groupSize
+      });
+
+      newCourse.save(function(err, savedCourse) {
+        if(err) console.log(err);
+        else {
+          res.json({courseId: savedCourse.course_id});
+        }
+      });
+    } else {
+      createCourse(req, res);
     }
   });
-};
+  
+  };
 
 /* Route for editCourse page */
 exports.editCourse = function(req, res) {
   try {
-    var courseId = ObjectId(req.query.courseId);
+    var courseId = req.query.courseId;
     
-    Course.findById(courseId, function(err, course) {
+    Course.findOne({course_id: courseId}, function(err, course) {
       if(err) {
         console.log(err);
         res.send("invalid course id");
@@ -93,8 +104,8 @@ exports.editCourse = function(req, res) {
 /* Deletes a course from the db */
 exports.deleteCourse = function(req, res) {
   try {
-    var courseId = ObjectId(req.query.courseId);
-    Course.findByIdAndRemove(courseId, function(err, course) {
+    var courseId = req.query.courseId;
+    Course.findOneAndRemove({course_id: courseId}, function(err, course) {
       if(err) console.log(err);
       else {
         res.send(200);
@@ -125,12 +136,12 @@ exports.printCourses = function(req, res) {
 /* Sends back json on the progress of student surveys a certain course */
 exports.getSurveyProgress = function(req, res) {
   var completed, total;
-  var courseId = ObjectId(req.query.courseId);
+  var courseId = req.query.courseId;
   Student.count({course_id: courseId}, function(err, count) {
     if(err) console.log(err);
     else {
       completed = count;
-      Course.findById(courseId, function(err, course) {
+      Course.findOne({course_id: courseId}, function(err, course) {
         if(err) console.log(err);
         else {
           total = course.num_students;
@@ -146,10 +157,10 @@ exports.getSurveyProgress = function(req, res) {
 /* Creates a new student and saves it to the db */
 exports.createNewStudent = function(req, res) {
   console.log("Creating new Student for course " + req.body.courseId);
-  var courseId = ObjectId(req.body.courseId);
+  var courseId = req.body.courseId;
   // Do validation here
 
-  Course.findById(courseId, 'num_students', function(err, course) {
+  Course.findOne({course_id: courseId}, 'num_students', function(err, course) {
     var maxStuCount = course.num_students;  
     Student.count({course_id: courseId}, function(err, stuCount) {
       if(stuCount >= maxStuCount) {
@@ -165,7 +176,7 @@ exports.createNewStudent = function(req, res) {
           student_id: req.body.studentId,
           email: req.body.emailAddr,
           phone: req.body.phone,
-          course_id: ObjectId(req.body.courseId),
+          course_id: courseId,
           leader_rating: parseInt(req.body.leaderRadios),
           work_pref: typeof(req.body.workPref) === 'string' ? req.body.workPref === 'off' ? 0 : 1 : 2,
           avail: availArr,
@@ -194,7 +205,7 @@ exports.waitingRoom = function(req, res) {
 
 // clears all students and makes new ones for specified courseId
 exports.newStud = function(req, res) {
-  var courseId = ObjectId(req.query.courseId);
+  var courseId = req.query.courseId;
   var num = req.query.num || 100;
   Student.remove({}, function(err){});
   for(var i = 0; i < num; ++i) {
@@ -223,12 +234,12 @@ exports.newStud = function(req, res) {
 };
 
 exports.genGroups = function(req, res) {
-  var courseId = ObjectId(req.query.courseId);
+  var courseId = req.query.courseId;
 
   Student.find({course_id: courseId}, null, {sort: {avail_len: -1, leader_rating: -1}}, function(err, students) {
 
     // students is sorted by most available then by leader rating
-    Course.findById(courseId, "num_students group_size", function(err, course) {
+    Course.findOne({course_id: courseId}, "num_students group_size", function(err, course) {
       var k = Math.floor(course.num_students / course.group_size);
       var lm = getLeadersMembers(k, students);
       var leaders = lm.leaders, members = lm.members;
@@ -457,4 +468,15 @@ function shuffle(array) {
   }
 
   return array;
+}
+
+function makeid()
+{
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( var i=0; i < 5; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
 }
