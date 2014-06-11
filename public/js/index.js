@@ -44,10 +44,11 @@ function initStudentSurvey() {
   $("#studentForm").ajaxForm({
     beforeSubmit: checkStudentSurvey,
     success: function(rspTxt, stat) {
-      if(!rspTxt.status)
+      console.log(rspTxt);
+      if(!rspTxt.studentId)
         $("#maxStudentErrMsg").show();
       else
-        document.location = "/waitingRoom?courseId="+$("input[name=courseId]").val(); 
+        document.location = "/waitingRoom?courseId="+$("input[name=courseId]").val()+"&studentId="+rspTxt.studentId; 
     }
   });
 
@@ -61,6 +62,8 @@ function initStudentSurvey() {
     $("#studentForm").append($("<input>").attr({type: "hidden", name: "avail", value: availArray.join(',')}));
   });
 }
+
+
 
 // Checks the form data and display error messages
 function checkStudentSurvey() {
@@ -130,7 +133,7 @@ function initWaitingRoom() {
          $("#finishedMessage").css('display', "block");
          window.clearInterval(intervalId);
          $.get("/genGroups?courseId="+courseId+"&groupBy=leader,best match", function(data) {
-           document.location = "/groups?courseId="+courseId;
+           document.location = "/groups?courseId="+courseId+"&studentId="+$("#studentId").val();
          });
        }
      });

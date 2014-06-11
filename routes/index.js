@@ -20,23 +20,16 @@ exports.welcome = function(req, res) {
 
 exports.groups = function(req, res) {
   var courseId = ObjectId(req.query.courseId);
-  Student.find({course_id: courseId}, function(err, students) {
+  var studentId = ObjectId(req.query.studentId);
+  Student.findById(studentId, function(err, student) {
     if(err) console.log(err);
 
     var d = {};
     var groups = new Array();
-    for(var i = 0; i < students.length; ++i) {
-      var grpId = students[i].group_id;
-      if(!d[grpId]) 
-        d[grpId] = [students[i]];
-      else
-        d[grpId].push(students[i]);
-    }
-    var keys = Object.keys(d);
-    for(var i = 0; i < keys.length; ++i) {
-      groups.push({id: keys[i], members: d[keys[i]]});
-    }
-    res.render('groups', {groups : groups});
+    var grpId = student.group_id;
+    Student.find({group_id: grpId}, function(err, students) {
+      res.render('groups', {group : students});
+    });  
   });
 }
 
@@ -184,7 +177,8 @@ exports.createNewStudent = function(req, res) {
         newStudent.save(function(err, savedStudent) {
           if(err) console.log(err);
           else {
-            res.json({status: 1});
+            console.log(savedStudent);
+            res.json({studentId: savedStudent._id});
             return;
           }
         });
@@ -195,14 +189,14 @@ exports.createNewStudent = function(req, res) {
 
 /* Route to render raiting room view */
 exports.waitingRoom = function(req, res) {
-  res.render("waitingRoom", {courseId: req.query.courseId});
+  res.render("waitingRoom", {courseId: req.query.courseId, studentId: req.query.studentId});
 };
 
 // clears all students and makes new ones for specified courseId
 exports.newStud = function(req, res) {
   var courseId = ObjectId(req.query.courseId);
   var num = req.query.num || 100;
-  Student.remove({course_id: courseId}, function(err){});
+  Student.remove({}, function(err){});
   for(var i = 0; i < num; ++i) {
     var randArr = [];
     for(var j = 0; j < Math.ceil(Math.random() * 21); ++j) {

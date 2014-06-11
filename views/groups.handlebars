@@ -18,6 +18,8 @@
       <link rel="stylesheet" type="text/css" href="css/styles.css">
       <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900,200' rel='stylesheet' type='text/css'>
   <script src="https://code.jquery.com/jquery.js"></script>
+<script src="js/bootstrap.js"></script>
+<script src="js/index.js"></script>
 </head>
 
 <body>
@@ -28,22 +30,21 @@
       <p>A simple utility to form optimized groups for projects or studying.</p>
       </center>
     </div>
-    <h1>Here are the suggested groups for this class.</h1>
+    <h1>Here is your suggested group.</h1>
     
-    {{#each groups}}
       <div class="well">
         <script>
           var avail = {};
         </script>
-        {{#each members}}
+        {{#each group}}
           <p><strong>Name: </strong>{{name}}   <strong>Email: </strong>{{email}}</p>
           <script>
             var curr = [{{avail}}];
             for(var i = 0; i < curr.length; ++i) {
               if(!avail[curr[i]])
-                avail[curr[i]] = 1;
+                avail[curr[i]] = ["{{name}}"];
               else
-                ++avail[curr[i]];
+                avail[curr[i]].push("{{name}}");
             }
           </script>
         {{/each}}
@@ -95,14 +96,14 @@
           </table>
       </div>
       <script>
+        console.log(avail);
         for(var i = 0; i < Object.keys(avail).length; ++i){
-          $("#{{id}}_"+Object.keys(avail)[i]).text(avail[Object.keys(avail)[i]]);
+          $("#_"+Object.keys(avail)[i]).text(avail[Object.keys(avail)[i]].length);
+          $("#_"+Object.keys(avail)[i]).tooltip({title: avail[Object.keys(avail)[i]].join(', '), trigger: 'hover'});
         }
       </script>
-    {{/each}}
     
    
  </div>
-<script src="js/bootstrap.js"></script>
 </body>
 </html>

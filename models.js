@@ -33,23 +33,8 @@ var GroupSchema = new mongoose.Schema({
   "name": String
 });
 
-// This is needed if we have "accounts" (i.e. logins)
-//   If we have accounts, there will be unique students and they each 
-//    have multiple courses
-var StudentCourseSchema = new mongoose.Schema({
-  "student_id": ObjectId, 
-  "course_id": ObjectId
-});
-
-// Same as above
-var StudentGroupsSchema = new mongoose.Schema({
-  "student_id": ObjectId,
-  "group_id": ObjectId 
-});
 
 exports.Course = mongoose.model('Course', CourseSchema);
 exports.Student = mongoose.model('Student', StudentSchema);
 exports.Group = mongoose.model('Group', GroupSchema);
-exports.StudentCourse = mongoose.model('StudentCourse', StudentCourseSchema);
-exports.StudentGroups = mongoose.model('StudentGroups', StudentGroupsSchema);
 exports.CustomQuestion = mongoose.model('CustomQuestion', CustomQuestionSchema);

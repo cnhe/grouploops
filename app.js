@@ -6,7 +6,6 @@ var handlebars = require('express3-handlebars');
 var app = express();
 
 var index = require('./routes/index');
-var group = require('./routes/group');
 
 //database setup
 var mongoose = require('mongoose');
